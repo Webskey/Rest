@@ -59,11 +59,12 @@ public class ActivityService {
 		activityRepository.deleteById(id);
 	}
 
-	public void update(int id, ActivityEntity activity) {
+	public ActivityEntity update(int id, ActivityEntity activity) {
 		ActivityEntity currActivity = activityRepository.findById(id).get();	
 		currActivity.setName(activity.getName());
 		currActivity.setDesc(activity.getDesc());
 		currActivity.setNum(activity.getNum());
 		activityRepository.save(currActivity);
+		return currActivity;
 	}
 }

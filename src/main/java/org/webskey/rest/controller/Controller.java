@@ -99,9 +99,8 @@ public class Controller {
 		if(!activityService.exists(id)) {
 			log.error("Updating activity with id: {} - negative(no such activity).", id);
 			return new ResponseEntity<String>("Activity with id: " + id + " not found.", HttpStatus.NOT_FOUND);
-		}		
-		activityService.update(id, activity);
+		}				
 		log.info("Updating activity with id: {} - positive.", id);
-		return new ResponseEntity<ActivityEntity>(HttpStatus.OK);
+		return new ResponseEntity<ActivityEntity>(activityService.update(id, activity), HttpStatus.OK);
 	}
 }
