@@ -26,7 +26,8 @@ public class ActivityEntity {
 	private int num;
 	
 	public ActivityEntity() {}
-	public ActivityEntity(String name, String desc, int num) {
+	public ActivityEntity(int id, String name, String desc, int num) {
+		this.id = id;
 		this.name = name;
 		this.des = desc;
 		this.num = num;

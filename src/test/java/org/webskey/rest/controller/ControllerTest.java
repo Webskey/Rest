@@ -130,9 +130,11 @@ public class ControllerTest {
 		when(activityService.exists(anyInt())).thenReturn(false);
 		//when
 		mockMvc.perform(post("/activities/save").contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content("{\"id\" : 18,\"name\": \"anadsfderlan\",\"num\": 121555234,\"desc\": \"nofdschyba\"}"))
+				.content(builder.getJson()))
 		//then
-		.andExpect(content().json("{\"id\" : 18,\"name\": \"anadsfderlan\",\"num\": 121555234,\"desc\": \"nofdschyba\"}"))
+		.andExpect(jsonPath("name", is(builder.getActivity().getName())))
+		.andExpect(content().json(builder.getJson()))
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))		
 		.andExpect(status().isCreated());
 
 		verify(activityService, times(1)).save(any());
@@ -146,9 +148,9 @@ public class ControllerTest {
 		when(activityService.exists(anyInt())).thenReturn(true);
 		//when
 		mockMvc.perform(post("/activities/save").contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content("{\"id\" : 18,\"name\": \"anadsfderlan\",\"num\": 121555234,\"desc\": \"nofdschyba\"}"))
+				.content(builder.getJson()))
 		//then
-		.andExpect(content().string("Activity with id: 18 already exists."))
+		.andExpect(content().string("Activity with id: 1 already exists."))
 		.andExpect(status().isConflict());
 
 		verify(activityService, times(0)).save(any());
@@ -162,11 +164,11 @@ public class ControllerTest {
 		when(activityService.findDuplicates(any())).thenReturn("");
 		//when
 		mockMvc.perform(post("/activities/saveAll").contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content("[{\"id\" : 18,\"name\": \"anadsfderlan\",\"num\": 121555234,\"desc\": \"nofdschyba\"},"
-						+ "{\"id\" : 18,\"name\": \"anadsfderlan\",\"num\": 121555234,\"desc\": \"nofdschyba\"}]"))
+				.content(builder.getJsonList()))
 		//then
-		.andExpect(content().json("[{\"id\" : 18,\"name\": \"anadsfderlan\",\"num\": 121555234,\"desc\": \"nofdschyba\"},"
-				+ "{\"id\" : 18,\"name\": \"anadsfderlan\",\"num\": 121555234,\"desc\": \"nofdschyba\"}]"))
+		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+		.andExpect(content().json(builder.getJsonList()))
+		.andExpect(jsonPath("$[1].desc", is("desc2")))
 		.andExpect(status().isCreated());
 
 		verify(activityService, times(1)).saveAll(any());
@@ -180,8 +182,7 @@ public class ControllerTest {
 		when(activityService.findDuplicates(any())).thenReturn(" 15,");
 		//when
 		mockMvc.perform(post("/activities/saveAll").contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content("[{\"id\" : 18,\"name\": \"anadsfderlan\",\"num\": 121555234,\"desc\": \"nofdschyba\"},"
-						+ "{\"id\" : 18,\"name\": \"anadsfderlan\",\"num\": 121555234,\"desc\": \"nofdschyba\"}]"))
+				.content(builder.getJsonList()))
 		//then
 		.andExpect(content().string("Activities with id:" + " 15," + "already exists."))
 		.andExpect(status().isConflict());
@@ -260,7 +261,7 @@ public class ControllerTest {
 		when(activityService.exists(id)).thenReturn(true);
 		//when
 		mockMvc.perform(put("/activities/update/" + id).contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content("{\"id\" : 1,\"name\": \"name\",\"num\": 11,\"desc\": \"desc\"}"))				
+				.content(builder.getJson()))			
 		//then
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))		
 		.andExpect(jsonPath("$.id", is(1)))
@@ -282,7 +283,7 @@ public class ControllerTest {
 		when(activityService.exists(id)).thenReturn(false);
 		//when
 		mockMvc.perform(put("/activities/update/" + id).contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content("{\"id\" : 1,\"name\": \"name\",\"num\": 11,\"desc\": \"desc\"}"))				
+				.content(builder.getJson()))			
 		//then		
 		.andExpect(status().isNotFound());
 

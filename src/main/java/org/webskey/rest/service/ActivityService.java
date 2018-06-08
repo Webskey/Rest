@@ -34,8 +34,7 @@ public class ActivityService {
 
 	public List<ActivityEntity> findAll(){
 		List<ActivityEntity> list = new ArrayList<>();
-		for(ActivityEntity row : activityRepository.findAll())
-			list.add(row);
+		activityRepository.findAll().forEach(x -> list.add(x));		
 		return list;
 	}
 
