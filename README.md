@@ -1,19 +1,18 @@
 # Rest
 RESTfull SpringBoot application with database connection, logs and 93% of test coverage.
 
-###Built with:
+### Built with:
 * Java
 * SpringBoot
 * SpringData
-* Hibernate
 * MySQL
 * Jackson
 * Log4j
 * Maven
 * Eclipse
 
-###Tested with:
+### Tested with:
 * Postman
-* Spring Web Test
+* Spring MVC Test
 * Mockito
 * JUnit

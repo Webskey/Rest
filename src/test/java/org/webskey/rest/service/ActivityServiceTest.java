@@ -1,6 +1,9 @@
 package org.webskey.rest.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ public class ActivityServiceTest {
 	private ActivityService activityService;
 	
 	@Test
-	public void test() {
+	public void exists_shouldReturnTrue_whenExistsByIdReturnsTrue() {
 		//given
 		int id = 1;
 		when(activityRepository.existsById(id)).thenReturn(true);
@@ -39,7 +42,7 @@ public class ActivityServiceTest {
 	}
 	
 	@Test
-	public void findDuplicates() {
+	public void findDuplicates_shouldReturnStringOfDuplicates_whenDuplicatesFoundInGivenList() {
 		//given
 		List<ActivityEntity> list = builder.getActivityList();				
 		when(activityRepository.existsById(1)).thenReturn(true);		
@@ -51,7 +54,7 @@ public class ActivityServiceTest {
 	}
 	
 	@Test
-	public void findDuplicates2() {
+	public void findDuplicates_shouldReturnEmptyString_whenNoDuplicates() {
 		//given
 		List<ActivityEntity> list = builder.getActivityList();
 		//when
@@ -61,7 +64,7 @@ public class ActivityServiceTest {
 	}
 	
 	@Test
-	public void findAll() {
+	public void findAll_shouldReturnListOfActivies_whenFindAllMethodReturnsIterable() {
 		//given
 		Iterable<ActivityEntity> x = builder.getActivityList();;
 		when(activityRepository.findAll()).thenReturn(x);		
@@ -72,7 +75,7 @@ public class ActivityServiceTest {
 	}
 	
 	@Test
-	public void findAll1() {
+	public void findAll_shouldReturnEmptyArrayList_whenNoActiviesInTable() {
 		//given		
 		when(activityRepository.findAll()).thenReturn(new ArrayList<ActivityEntity>());		
 		//when
@@ -82,24 +85,27 @@ public class ActivityServiceTest {
 	}
 	
 	@Test
-	public void update() {
+	public void update_shouldReturnChangedActivityEntityDetails_whenMethodCalledWithNewObject() {
 		//given		
 		int id = 2;
-		when(activityRepository.findById(id)).thenReturn(Optional.of(builder.getActivity()));		
+		when(activityRepository.findById(id)).thenReturn(Optional.of(builder.getActivity()));	
 		//when
 		ActivityEntity activity = activityService.update(id, new ActivityEntity(123, "eman", "csed", 321));
 		//then
-		assertEquals(activity, builder.getActivity());
+		assertEquals(activity.getName(), "eman");
+		assertEquals(activity.getDesc(), "csed");
+		
+		verify(activityRepository, times(1)).findById(id);
 	}
 	
-	@Test
-	public void update1() {
+	@Test(expected = NullPointerException.class)
+	public void update_shouldThrowNullPointerException_whenMethodCalledWithNullArgument() {
 		//given		
 		int id = 2;
 		when(activityRepository.findById(id)).thenReturn(Optional.of(builder.getActivity()));		
 		//when
-		ActivityEntity activity = activityService.update(id, new ActivityEntity(123, "eman", "csed", 321));
+		ActivityEntity activity = activityService.update(id, null);
 		//then
-		assertEquals(activity, builder.getActivity());
+		assertNull(activity);
 	}
 }
