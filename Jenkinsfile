@@ -1,21 +1,30 @@
 pipeline {
     agent any
-
     stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
+        
+        stage('Clone sources') {
+            steps{
+                git url: 'https://github.com/webskey/rest.git'
             }
         }
-        stage('Test') {
+        
+        stage('Build') { 
             steps {
-                echo 'Testing..'
+                bat 'mvn package' 
+            }
+        } 
+        
+        stage('Test') { 
+            steps {
+                bat 'mvn test' 
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
+    }
+    
+    post {
+        always {
+            junit 'target/surefire-reports/*.xml' 
+            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
         }
     }
 }
