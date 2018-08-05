@@ -37,7 +37,7 @@ public class Controller {
 		return new ResponseEntity<ActivityEntity>(activityService.findById(id), HttpStatus.OK);
 	}
 
-	@GetMapping("/activities/list")
+	@GetMapping("/activities")
 	public ResponseEntity<?> getAllActivities() {
 		List<ActivityEntity> list = activityService.findAll();		
 		if(list.isEmpty()) {
@@ -48,7 +48,7 @@ public class Controller {
 		return new ResponseEntity<List<ActivityEntity>>(list, HttpStatus.OK);
 	}	
 	// SAVE
-	@PostMapping("/activities/save")
+	@PostMapping("/activities")
 	public ResponseEntity<?> saveActivity(@RequestBody ActivityEntity activity) {
 		if(activityService.exists(activity.getId())) {
 			log.error("Saving new activity with id: {} - negative(already exists).", activity.getId());
@@ -60,7 +60,7 @@ public class Controller {
 		return new ResponseEntity<ActivityEntity>(activity, HttpStatus.CREATED);
 	}
 
-	@PostMapping("/activities/saveAll")
+	@PostMapping("/activities/save-all")
 	public ResponseEntity<?> saveAllActivities(@RequestBody List<ActivityEntity> list){
 		String duplicates = activityService.findDuplicates(list);
 		if(!duplicates.isEmpty()) {			
@@ -72,7 +72,7 @@ public class Controller {
 		return new ResponseEntity<List<ActivityEntity>>(list, HttpStatus.CREATED);
 	}	
 	// DELETE
-	@DeleteMapping("/activities/delete/{id}")
+	@DeleteMapping("/activities/{id}")
 	public ResponseEntity<?> deleteActivityById(@PathVariable int id){
 		if(!activityService.exists(id)) {
 			log.info("Deleting activity with id: {} - negative(no such id).", id);
@@ -83,7 +83,7 @@ public class Controller {
 		return new ResponseEntity<ActivityEntity>(HttpStatus.NO_CONTENT);
 	}
 
-	@DeleteMapping("/activities/deleteAll")
+	@DeleteMapping("/activities")
 	public ResponseEntity<?> deleteAllActivities(){
 		if(activityService.count() == 0) {
 			log.error("Deleting all activities - negative(list of activities is empty).");
@@ -94,7 +94,7 @@ public class Controller {
 		return new ResponseEntity<ActivityEntity>(HttpStatus.NO_CONTENT);
 	}
 	// UPDATE
-	@PutMapping("/activities/update/{id}")
+	@PutMapping("/activities/{id}")
 	public ResponseEntity<?> updateActivityById(@PathVariable int id, @RequestBody ActivityEntity activity){
 		if(!activityService.exists(id)) {
 			log.error("Updating activity with id: {} - negative(no such activity).", id);

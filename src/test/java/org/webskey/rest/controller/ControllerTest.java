@@ -96,7 +96,7 @@ public class ControllerTest {
 		//given
 		when(activityService.findAll()).thenReturn(builder.getActivityList());
 		//when
-		mockMvc.perform(get("/activities/list"))
+		mockMvc.perform(get("/activities"))
 		//then		
 		.andExpect(status().isOk())
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -114,7 +114,7 @@ public class ControllerTest {
 		//given
 		when(activityService.findAll()).thenReturn(new ArrayList<ActivityEntity>());
 		//when
-		mockMvc.perform(get("/activities/list"))
+		mockMvc.perform(get("/activities"))
 		//then	
 		.andExpect(content().string("No activity found."))
 		.andExpect(status().isNoContent());
@@ -129,7 +129,7 @@ public class ControllerTest {
 		doNothing().when(activityService).save(any());
 		when(activityService.exists(anyInt())).thenReturn(false);
 		//when
-		mockMvc.perform(post("/activities/save").contentType(MediaType.APPLICATION_JSON_UTF8)
+		mockMvc.perform(post("/activities").contentType(MediaType.APPLICATION_JSON_UTF8)
 				.content(builder.getJson()))
 		//then
 		.andExpect(jsonPath("name", is(builder.getActivity().getName())))
@@ -147,7 +147,7 @@ public class ControllerTest {
 		doNothing().when(activityService).save(any());
 		when(activityService.exists(anyInt())).thenReturn(true);
 		//when
-		mockMvc.perform(post("/activities/save").contentType(MediaType.APPLICATION_JSON_UTF8)
+		mockMvc.perform(post("/activities").contentType(MediaType.APPLICATION_JSON_UTF8)
 				.content(builder.getJson()))
 		//then
 		.andExpect(content().string("Activity with id: 1 already exists."))
@@ -163,7 +163,7 @@ public class ControllerTest {
 		doNothing().when(activityService).saveAll(any());
 		when(activityService.findDuplicates(any())).thenReturn("");
 		//when
-		mockMvc.perform(post("/activities/saveAll").contentType(MediaType.APPLICATION_JSON_UTF8)
+		mockMvc.perform(post("/activities/save-all").contentType(MediaType.APPLICATION_JSON_UTF8)
 				.content(builder.getJsonList()))
 		//then
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -181,7 +181,7 @@ public class ControllerTest {
 		doNothing().when(activityService).saveAll(any());
 		when(activityService.findDuplicates(any())).thenReturn(" 15,");
 		//when
-		mockMvc.perform(post("/activities/saveAll").contentType(MediaType.APPLICATION_JSON_UTF8)
+		mockMvc.perform(post("/activities/save-all").contentType(MediaType.APPLICATION_JSON_UTF8)
 				.content(builder.getJsonList()))
 		//then
 		.andExpect(content().string("Activities with id:" + " 15," + "already exists."))
@@ -199,7 +199,7 @@ public class ControllerTest {
 		doNothing().when(activityService).deleteById(id);
 		when(activityService.exists(id)).thenReturn(true);
 		//when
-		mockMvc.perform(delete("/activities/delete/" + id))				
+		mockMvc.perform(delete("/activities/" + id))				
 		//then
 		.andExpect(status().isNoContent());
 
@@ -214,7 +214,7 @@ public class ControllerTest {
 		doNothing().when(activityService).deleteById(id);
 		when(activityService.exists(id)).thenReturn(false);
 		//when
-		mockMvc.perform(delete("/activities/delete/" + id))	
+		mockMvc.perform(delete("/activities/" + id))	
 		//then
 		.andExpect(content().string("Activity with id: " + id + " not found."))
 		.andExpect(status().isNotFound());
@@ -229,7 +229,7 @@ public class ControllerTest {
 		doNothing().when(activityService).deleteAll();
 		when(activityService.count()).thenReturn((long)3);
 		//when
-		mockMvc.perform(delete("/activities/deleteAll"))				
+		mockMvc.perform(delete("/activities"))				
 		//then
 		.andExpect(status().isNoContent());
 
@@ -243,7 +243,7 @@ public class ControllerTest {
 		doNothing().when(activityService).deleteAll();
 		when(activityService.count()).thenReturn((long)0);
 		//when
-		mockMvc.perform(delete("/activities/deleteAll"))				
+		mockMvc.perform(delete("/activities"))				
 		//then
 		.andExpect(content().string("List of activities is empty."))
 		.andExpect(status().isNotFound());
@@ -260,7 +260,7 @@ public class ControllerTest {
 		when(activityService.update(id, activity)).thenReturn(activity);
 		when(activityService.exists(id)).thenReturn(true);
 		//when
-		mockMvc.perform(put("/activities/update/" + id).contentType(MediaType.APPLICATION_JSON_UTF8)
+		mockMvc.perform(put("/activities/" + id).contentType(MediaType.APPLICATION_JSON_UTF8)
 				.content(builder.getJson()))			
 		//then
 		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))		
@@ -282,7 +282,7 @@ public class ControllerTest {
 		when(activityService.update(id, activity)).thenReturn(activity);
 		when(activityService.exists(id)).thenReturn(false);
 		//when
-		mockMvc.perform(put("/activities/update/" + id).contentType(MediaType.APPLICATION_JSON_UTF8)
+		mockMvc.perform(put("/activities/" + id).contentType(MediaType.APPLICATION_JSON_UTF8)
 				.content(builder.getJson()))			
 		//then		
 		.andExpect(status().isNotFound());
