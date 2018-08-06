@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.webskey.rest.model.ActivityEntity;
-import org.webskey.rest.repository.ActivityRepository;
+import org.webskey.rest.entities.ActivityEntity;
+import org.webskey.rest.repositories.ActivityRepository;
 
 @Service
 public class ActivityService {

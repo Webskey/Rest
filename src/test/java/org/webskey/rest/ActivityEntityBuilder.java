@@ -3,7 +3,7 @@ package org.webskey.rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.webskey.rest.model.ActivityEntity;
+import org.webskey.rest.entities.ActivityEntity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

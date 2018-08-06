@@ -32,7 +32,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.webskey.rest.ActivityEntityBuilder;
 import org.webskey.rest.RestApplication;
-import org.webskey.rest.model.ActivityEntity;
+import org.webskey.rest.controllers.Controller;
+import org.webskey.rest.entities.ActivityEntity;
 import org.webskey.rest.service.ActivityService;
 
 @RunWith(SpringRunner.class)

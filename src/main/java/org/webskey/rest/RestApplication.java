@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableAutoConfiguration
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "org.webskey.rest.repository")
+@EnableJpaRepositories(basePackages = "org.webskey.rest.repositories")
 public class RestApplication {
 
 	public static void main(String[] args) {

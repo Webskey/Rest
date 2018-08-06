@@ -16,8 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.webskey.rest.ActivityEntityBuilder;
-import org.webskey.rest.model.ActivityEntity;
-import org.webskey.rest.repository.ActivityRepository;
+import org.webskey.rest.entities.ActivityEntity;
+import org.webskey.rest.repositories.ActivityRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ActivityServiceTest {
