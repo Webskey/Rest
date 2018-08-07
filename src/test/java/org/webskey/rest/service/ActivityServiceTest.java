@@ -93,7 +93,7 @@ public class ActivityServiceTest {
 		ActivityEntity activity = activityService.update(id, new ActivityEntity(123, "eman", "csed", 321));
 		//then
 		assertEquals(activity.getName(), "eman");
-		assertEquals(activity.getDesc(), "csed");
+		assertEquals(activity.getDes(), "csed");
 		
 		verify(activityRepository, times(1)).findById(id);
 	}

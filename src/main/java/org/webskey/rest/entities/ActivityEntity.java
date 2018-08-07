@@ -26,7 +26,7 @@ public class ActivityEntity {
 	private String name;
 
 	@Column
-	private String desc;
+	private String des;
 
 	@Column
 	private int num;

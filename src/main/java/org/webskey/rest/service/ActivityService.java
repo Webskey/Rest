@@ -61,7 +61,7 @@ public class ActivityService {
 	public ActivityEntity update(int id, ActivityEntity activity) {
 		ActivityEntity currActivity = activityRepository.findById(id).get();	
 		currActivity.setName(activity.getName());
-		currActivity.setDesc(activity.getDesc());
+		currActivity.setDes(activity.getDes());
 		currActivity.setNum(activity.getNum());
 		activityRepository.save(currActivity);
 		return currActivity;

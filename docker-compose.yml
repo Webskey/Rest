@@ -1,0 +1,31 @@
+version: "3"
+services:
+  db:
+    image: mysql
+    networks: 
+      - dbN
+    environment:
+      - MYSQL_ROOT_PASSWORD=boss
+      - MYSQL_USER=webby
+      - MYSQL_PASSWORD=boss
+      - MYSQL_DATABASE=webby
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbV:/var/lib/mysql
+  app:
+    build: .
+    ports:
+      - 8080:8080
+    networks: 
+      - dbN
+    depends_on:
+      - db
+    restart: on-failure
+    
+volumes: 
+  dbV:
+
+networks: 
+ dbN:
+  driver: bridge

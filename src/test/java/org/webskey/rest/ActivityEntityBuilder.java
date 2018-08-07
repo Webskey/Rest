@@ -16,7 +16,7 @@ public class ActivityEntityBuilder {
 		this.activityEntity = new ActivityEntity();
 		activityEntity.setId(1);
 		activityEntity.setName("name");
-		activityEntity.setDesc("desc");
+		activityEntity.setDes("desc");
 		activityEntity.setNum(11);
 	}
 	
