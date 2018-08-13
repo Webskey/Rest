@@ -12,7 +12,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - dbV:/var/lib/mysql
+      - /c/Users/Webskey/volumer/sqler:/docker-entrypoint-initdb.d 
   app:
     build: .
     ports:
@@ -22,9 +22,6 @@ services:
     depends_on:
       - db
     restart: on-failure
-    
-volumes: 
-  dbV:
 
 networks: 
  dbN:
